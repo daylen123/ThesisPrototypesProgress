@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 lastState = 'Forward'
-
+counter = 0
 
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(min_detection_confidence=0.5, min_tracking_confidence=0.5)
@@ -93,22 +93,25 @@ with open('data.csv', 'a', encoding='UTF8') as f:
                 if y < -10:
 
                     text = "Looking Left"
-
+                    if text != lastState:
+                        counter +=1
                     lastState = 'Looking Left'
                 elif y > 10:
 
                     text = "Looking Right"
-
+                    if text != lastState:
+                        counter +=1
                     lastState = 'Looking Right'
 
                 elif x < -10:
                     text = "Looking Down"
 
-
+                    if text != lastState:
+                        counter +=1
                     lastState = 'Looking Down'
                 else:
                     text = "Forward"
-                print(text)
+                print(text,counter)
 
                 # Display the nose direction
                 nose_3d_projection, jacobian = cv2.projectPoints(nose_3d, rot_vec, trans_vec, cam_matrix, dist_matrix)
