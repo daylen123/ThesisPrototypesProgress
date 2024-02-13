@@ -42,6 +42,13 @@ with open('data.csv', 'a', encoding='UTF8') as f:
         face_3d = []
         face_2d = []
 
+        now = datetime.now()
+
+        current_time = now.strftime("%H:%M:%S")
+        data = [counter, current_time]
+        # write the data
+        writer.writerow(data)
+
         if results.multi_face_landmarks:
             for face_landmarks in results.multi_face_landmarks:
                 for idx, lm in enumerate(face_landmarks.landmark):
@@ -111,7 +118,7 @@ with open('data.csv', 'a', encoding='UTF8') as f:
                     lastState = 'Looking Down'
                 else:
                     text = "Forward"
-                print(text,counter)
+                print(text,counter , current_time)
 
                 # Display the nose direction
                 nose_3d_projection, jacobian = cv2.projectPoints(nose_3d, rot_vec, trans_vec, cam_matrix, dist_matrix)
